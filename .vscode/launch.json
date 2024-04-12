@@ -1,0 +1,29 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "name": "debug tests",
+        "type": "cppdbg",
+        "request": "launch",
+        "program": "${workspaceFolder}/build/tests/tests",
+        "args": [],
+        "cwd": "${workspaceFolder}/",
+        "environment": [],
+        "externalConsole": false,
+        "MIMode": "gdb",
+        "miDebuggerPath": "/usr/bin/gdb", // Modify this path according to your system configuration
+        "stopAtEntry": true,
+        "preLaunchTask": "build"
+      }
+    ],
+    "inputs": [
+      {
+        "id": "testName",
+        "type": "promptString",
+        "description": "Enter the test name",
+        "default": "ringbuf_test"
+      }
+    ]
+
+  }
+  

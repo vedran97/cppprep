@@ -1,0 +1,42 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build",
+            "detail": "builds the project",
+            "type": "shell",
+            "command": "mkdir -p build && cmake -S . -B build && cmake --build build/ -j12",
+            "group": {
+                "kind": "build"
+            },
+            "problemMatcher": "$gcc",
+            "presentation" : {
+                "panel":"dedicated"
+            }
+        },
+        {
+            "label": "clean",
+            "detail": "Clean the Workspace Build Area",
+            "type": "shell",
+            "command": "rm -rf build",
+            "problemMatcher": "$gcc",
+            "group": "build",
+            "presentation" : {
+                "panel":"dedicated"
+            }
+        },
+        {
+            "label": "run-tests",
+            "detail": "run all tests",
+            "type": "shell",
+            "command": "cd build && ctest",
+            "problemMatcher": "$gcc",
+            "group": "build",
+            "presentation" : {
+                "panel":"dedicated"
+            }
+        }
+    ]
+}
