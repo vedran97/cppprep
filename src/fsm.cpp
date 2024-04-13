@@ -1,13 +1,14 @@
 #include "fsm/fsm.hpp"
-#include "fsm/fsm_types.hpp"
 #include "fsm/fsm_statefunctions.hpp"
 #include "fsm/fsm_transitions.hpp"
+#include "fsm/fsm_types.hpp"
 #include <iostream>
 #include <memory>
 #include <mutex>
 
 namespace prep {
-static const constexpr transition_table_t_ transition_table = initTransitionTable();
+static const constexpr transition_table_t_ transition_table =
+    initTransitionTable();
 static const constexpr function_table_t_ function_table = initFunctionTable();
 
 FSM::FSM() {
@@ -22,16 +23,14 @@ bool FSM::processFSM() {
     auto current_event = event_queue.front();
     event_queue.pop();
     lock.unlock();
-    auto next_requested_state =
-        transition_table.at(GET_ENUM_VAL( current_state))
-            .at(GET_ENUM_VAL( current_event));
+    auto next_requested_state = transition_table.at(getEnumVal(current_state))
+                                    .at(getEnumVal(current_event));
     if (next_requested_state != eStates::SENTINEL) {
-      auto on_exit = function_table.at(GET_ENUM_VAL(current_state));
+      auto on_exit = function_table.at(getEnumVal(current_state));
       if (on_exit.onExit != nullptr) {
         auto on_exit_result = on_exit.onExit(this->app_context);
         if (on_exit_result) {
-          auto on_entry =
-              function_table.at(GET_ENUM_VAL( next_requested_state));
+          auto on_entry = function_table.at(getEnumVal(next_requested_state));
           if (on_entry.onEntry != nullptr) {
             auto on_entry_result = on_entry.onEntry(this->app_context);
             if (on_entry_result) {
@@ -39,19 +38,16 @@ bool FSM::processFSM() {
               this->current_state = next_requested_state;
             } else {
               std::cout << "onEntry to state "
-                        << GET_ENUM_VAL(next_requested_state)
-                        << " from state "
-                        << GET_ENUM_VAL( current_state) << " failed"
-                        << std::endl;
+                        << getEnumVal(next_requested_state) << " from state "
+                        << getEnumVal(current_state) << " failed" << std::endl;
             }
           } else {
             throw(std::runtime_error("onEntry function undefined"));
           }
         } else {
-          std::cout << "onExit from state "
-                    << GET_ENUM_VAL(current_state) << " to state "
-                    << GET_ENUM_VAL( next_requested_state) << " failed"
-                    << std::endl;
+          std::cout << "onExit from state " << getEnumVal(current_state)
+                    << " to state " << getEnumVal(next_requested_state)
+                    << " failed" << std::endl;
         }
       } else {
         throw(std::runtime_error("onExit function undefined"));
@@ -60,7 +56,7 @@ bool FSM::processFSM() {
   }
   if (lock.owns_lock())
     lock.unlock();
-  auto on_process = function_table.at(GET_ENUM_VAL(current_state));
+  auto on_process = function_table.at(getEnumVal(current_state));
   if (on_process.onProcess != nullptr) {
     on_process.onProcess(this->app_context);
   } else {

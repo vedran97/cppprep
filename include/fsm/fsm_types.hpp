@@ -7,9 +7,8 @@
 #include <type_traits>
 namespace prep {
 
-template <typename T>
-inline constexpr auto GET_ENUM_VAL(const T& val){
-return static_cast<std::underlying_type_t<T>>(val);
+template <typename T> inline constexpr auto getEnumVal(const T &val) {
+  return static_cast<std::underlying_type_t<T>>(val);
 }
 
 enum class eStates : std::size_t { INIT, PREOP, READY, DO, ERROR, SENTINEL };
@@ -27,18 +26,16 @@ struct AppContext {
 };
 
 struct StateFunctions {
-  bool (*onEntry)(const std::shared_ptr<AppContext>) =nullptr;
-  bool (*onExit)(const std::shared_ptr<AppContext>)  =nullptr;
-  void (*onProcess)(const std::shared_ptr<AppContext>)  =nullptr;
+  bool (*onEntry)(const std::shared_ptr<AppContext>) = nullptr;
+  bool (*onExit)(const std::shared_ptr<AppContext>) = nullptr;
+  void (*onProcess)(const std::shared_ptr<AppContext>) = nullptr;
 };
 
 using transition_table_t_ =
-    std::array<std::array<eStates,
-                          GET_ENUM_VAL( eEvents::SENTINEL)>,
-               GET_ENUM_VAL( eStates::SENTINEL)>;
+    std::array<std::array<eStates, getEnumVal(eEvents::SENTINEL)>,
+               getEnumVal(eStates::SENTINEL)>;
 
 using function_table_t_ =
-    std::array<StateFunctions,
-               GET_ENUM_VAL( eStates::SENTINEL)>;
+    std::array<StateFunctions, getEnumVal(eStates::SENTINEL)>;
 } // namespace prep
 #endif

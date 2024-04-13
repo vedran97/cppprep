@@ -2,8 +2,6 @@
 #define PREP_FSM_HPP
 #include "fsm_types.hpp"
 
-
-
 #include <memory>
 #include <mutex>
 #include <queue>
@@ -19,7 +17,6 @@ public:
   auto getAppContext() { return *this->app_context; }
 
 private:
-
   std::shared_ptr<AppContext> app_context;
   prep::eStates current_state = prep::eStates::INIT;
   prep::eStates prev_state = prep::eStates::INIT;

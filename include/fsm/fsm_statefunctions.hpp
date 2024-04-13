@@ -2,7 +2,7 @@
 #define PREP_FSM_STATE_FUNCTIONS_HPP
 #include "fsm_types.hpp"
 #include <iostream>
-namespace prep{
+namespace prep {
 inline bool emptyOnExit(const std::shared_ptr<AppContext> app_context) {
   std::cout << "Inside " << __FUNCTION__ << std::endl;
   return true;
@@ -28,9 +28,8 @@ inline consteval function_table_t_ initFunctionTable() {
     state_function.onExit = emptyOnExit;
     state_function.onProcess = emptyOnProcess;
   }
-  function_table_.at(GET_ENUM_VAL(eStates::DO)).onProcess =
-      doOnProcess;
+  function_table_.at(getEnumVal(eStates::DO)).onProcess = doOnProcess;
   return function_table_;
 }
-}
+} // namespace prep
 #endif
