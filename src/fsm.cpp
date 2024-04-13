@@ -1,5 +1,7 @@
 #include "fsm/fsm.hpp"
 #include "fsm/fsm_types.hpp"
+#include "fsm/fsm_statefunctions.hpp"
+#include "fsm/fsm_transitions.hpp"
 #include <iostream>
 #include <memory>
 #include <mutex>
@@ -21,15 +23,15 @@ bool FSM::processFSM() {
     event_queue.pop();
     lock.unlock();
     auto next_requested_state =
-        transition_table.at(GET_ENUM_VAL(eStates, current_state))
-            .at(GET_ENUM_VAL(eEvents, current_event));
+        transition_table.at(GET_ENUM_VAL( current_state))
+            .at(GET_ENUM_VAL( current_event));
     if (next_requested_state != eStates::SENTINEL) {
-      auto on_exit = function_table.at(GET_ENUM_VAL(eStates, current_state));
+      auto on_exit = function_table.at(GET_ENUM_VAL(current_state));
       if (on_exit.onExit != nullptr) {
         auto on_exit_result = on_exit.onExit(this->app_context);
         if (on_exit_result) {
           auto on_entry =
-              function_table.at(GET_ENUM_VAL(eStates, next_requested_state));
+              function_table.at(GET_ENUM_VAL( next_requested_state));
           if (on_entry.onEntry != nullptr) {
             auto on_entry_result = on_entry.onEntry(this->app_context);
             if (on_entry_result) {
@@ -37,9 +39,9 @@ bool FSM::processFSM() {
               this->current_state = next_requested_state;
             } else {
               std::cout << "onEntry to state "
-                        << GET_ENUM_VAL(eStates, next_requested_state)
+                        << GET_ENUM_VAL(next_requested_state)
                         << " from state "
-                        << GET_ENUM_VAL(eStates, current_state) << " failed"
+                        << GET_ENUM_VAL( current_state) << " failed"
                         << std::endl;
             }
           } else {
@@ -47,8 +49,8 @@ bool FSM::processFSM() {
           }
         } else {
           std::cout << "onExit from state "
-                    << GET_ENUM_VAL(eStates, current_state) << " to state "
-                    << GET_ENUM_VAL(eStates, next_requested_state) << " failed"
+                    << GET_ENUM_VAL(current_state) << " to state "
+                    << GET_ENUM_VAL( next_requested_state) << " failed"
                     << std::endl;
         }
       } else {
@@ -58,7 +60,7 @@ bool FSM::processFSM() {
   }
   if (lock.owns_lock())
     lock.unlock();
-  auto on_process = function_table.at(GET_ENUM_VAL(eStates, current_state));
+  auto on_process = function_table.at(GET_ENUM_VAL(current_state));
   if (on_process.onProcess != nullptr) {
     on_process.onProcess(this->app_context);
   } else {

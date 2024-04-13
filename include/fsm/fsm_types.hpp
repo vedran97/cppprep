@@ -6,7 +6,11 @@
 #include <string>
 #include <type_traits>
 namespace prep {
-#define GET_ENUM_VAL(T, V) static_cast<std::underlying_type_t<T>>(V)
+
+template <typename T>
+inline constexpr auto GET_ENUM_VAL(const T& val){
+return static_cast<std::underlying_type_t<T>>(val);
+}
 
 enum class eStates : std::size_t { INIT, PREOP, READY, DO, ERROR, SENTINEL };
 enum class eEvents : std::size_t {
@@ -30,11 +34,11 @@ struct StateFunctions {
 
 using transition_table_t_ =
     std::array<std::array<eStates,
-                          GET_ENUM_VAL(eEvents, eEvents::SENTINEL)>,
-               GET_ENUM_VAL(eStates, eStates::SENTINEL)>;
+                          GET_ENUM_VAL( eEvents::SENTINEL)>,
+               GET_ENUM_VAL( eStates::SENTINEL)>;
 
 using function_table_t_ =
     std::array<StateFunctions,
-               GET_ENUM_VAL(eStates, eStates::SENTINEL)>;
+               GET_ENUM_VAL( eStates::SENTINEL)>;
 } // namespace prep
 #endif

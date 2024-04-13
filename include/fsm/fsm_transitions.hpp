@@ -4,8 +4,8 @@
 #include "fsm_types.hpp"
 namespace prep{
 #define STATE_TRANSITION(FROM_STATE, EVENT, NEXT_STATE)                        \
-  local_table_.at(GET_ENUM_VAL(eStates, FROM_STATE))                           \
-      .at(GET_ENUM_VAL(eEvents, EVENT)) = NEXT_STATE;
+  local_table_.at(GET_ENUM_VAL( FROM_STATE))                           \
+    .at(GET_ENUM_VAL( EVENT)) = NEXT_STATE;
 
 ;
 

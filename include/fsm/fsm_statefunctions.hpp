@@ -28,7 +28,7 @@ inline consteval function_table_t_ initFunctionTable() {
     state_function.onExit = emptyOnExit;
     state_function.onProcess = emptyOnProcess;
   }
-  function_table_.at(GET_ENUM_VAL(eStates, eStates::DO)).onProcess =
+  function_table_.at(GET_ENUM_VAL(eStates::DO)).onProcess =
       doOnProcess;
   return function_table_;
 }
