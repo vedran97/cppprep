@@ -2,10 +2,7 @@
 #define PREP_FSM_TYPES_HPP
 #include <array>
 #include <cstddef>
-#include <functional>
 #include <memory>
-#include <mutex>
-#include <queue>
 #include <string>
 #include <type_traits>
 namespace prep {

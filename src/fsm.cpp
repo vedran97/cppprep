@@ -5,7 +5,8 @@
 #include <mutex>
 
 namespace prep {
-  
+static const constexpr transition_table_t_ transition_table = initTransitionTable();
+static const constexpr function_table_t_ function_table = initFunctionTable();
 
 FSM::FSM() {
   app_context = std::make_shared<AppContext>();

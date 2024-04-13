@@ -20,9 +20,7 @@ public:
   auto getAppContext() { return *this->app_context; }
 
 private:
-  static const constexpr transition_table_t_ transition_table =
-      initTransitionTable();
-  static const constexpr function_table_t_ function_table = initFunctionTable();
+
   std::shared_ptr<AppContext> app_context;
   prep::eStates current_state = prep::eStates::INIT;
   prep::eStates prev_state = prep::eStates::INIT;
