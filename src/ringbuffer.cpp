@@ -1,4 +1,2 @@
 #include "ringbuffer.hpp"
-namespace prep{
-
-}
+namespace prep {}

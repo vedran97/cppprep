@@ -81,5 +81,5 @@
         "variant": "cpp"
     },
     "cmake.configureOnOpen": false,
-    "editor.formatOnSave": false
+    "editor.formatOnSave": true
 }
