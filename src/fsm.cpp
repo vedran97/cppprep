@@ -67,7 +67,7 @@ bool FSM::processFSM() {
 
 void FSM::addEvent(const eEvents event) {
   std::unique_lock<std::mutex> lock(this->queue_mutex);
-  return event_queue.push(event);
+  event_queue.push(event);
 }
 
 } // namespace prep

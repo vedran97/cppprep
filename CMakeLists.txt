@@ -18,7 +18,7 @@ if(NOT CMAKE_BUILD_TYPE)
         FORCE)
 endif()
 
-add_compile_options(-Wall -Wpedantic -fsanitize=undefined,address -std=c++23 -O3)
+add_compile_options(-Wall -Wpedantic -fsanitize=undefined,address -std=c++20 -O3)
 add_link_options(-fsanitize=undefined,address)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON) # Enable compile_commands.json

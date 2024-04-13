@@ -7,8 +7,9 @@
 #include <type_traits>
 namespace prep {
 
-template <typename T> inline constexpr auto getEnumVal(const T &val) {
-  return static_cast<std::underlying_type_t<T>>(val);
+inline constexpr auto getEnumVal(const auto &val) {
+  return static_cast<
+      std::underlying_type_t<std::remove_reference_t<decltype(val)>>>(val);
 }
 
 enum class eStates : std::size_t { INIT, PREOP, READY, DO, ERROR, SENTINEL };
